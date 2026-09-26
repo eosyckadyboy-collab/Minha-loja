@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Loja de Arte</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>🎨 Minha Loja de Arte</h1>
+  <p>Telas e pinturas feitas à mão</p>
+</header>
+
+<main>
+  <h2>Minhas Telas</h2>
+
+  <div class="produtos" id="produtos"></div>
+
+  <section class="carrinho">
+    <h2>🛒 Meu Carrinho</h2>
+
+    <div id="lista-carrinho">
+      <p class="vazio">Seu carrinho está vazio.</p>
+    </div>
+
+    <div class="total">
+      Total: <span id="total">0 MT</span>
+    </div>
+
+    <button id="limpar">Limpar carrinho</button>
+    <button id="whatsapp" onclick="finalizarWhatsApp()">
+      📲 Finalizar pedido pelo WhatsApp
+    </button>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Minha Loja de Arte</p>
+</footer>
+
+<script src="produtos.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
