@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vender minha arte — Minha Loja de Arte</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="container nav">
+    <a href="index.html" class="logo">
+      Minha Loja de Arte
+      <small>por Siedade Arte</small>
+    </a>
+  </div>
+</header>
+
+<main class="container" style="padding:50px 20px;">
+
+  <section class="seller-box">
+    <span class="eyebrow">PARA ARTISTAS</span>
+
+    <h1>🎨 Coloca a tua arte na nossa loja</h1>
+
+    <p>
+      Preenche os dados abaixo. A tua obra será analisada
+      antes de aparecer publicamente.
+    </p>
+
+    <form id="formArtista">
+
+      <label>Nome completo</label>
+      <input
+        type="text"
+        id="nome"
+        placeholder="Ex.: Siedade Horácio Salima"
+        required
+      >
+
+      <label>Nome artístico</label>
+      <input
+        type="text"
+        id="artista"
+        placeholder="Ex.: Siedade Arte"
+        required
+      >
+
+      <label>WhatsApp</label>
+      <input
+        type="tel"
+        id="whatsapp"
+        placeholder="Ex.: 25884xxxxxxx"
+        required
+      >
+
+      <label>Nome da obra</label>
+      <input
+        type="text"
+        id="obra"
+        placeholder="Ex.: Horizonte"
+        required
+      >
+
+      <label>Categoria</label>
+      <select id="categoria" required>
+        <option value="">Escolha uma categoria</option>
+        <option>Pintura</option>
+        <option>Desenho</option>
+        <option>Retrato</option>
+        <option>Arte abstrata</option>
+        <option>Arte tradicional</option>
+        <option>Outra arte</option>
+      </select>
+
+      <label>Preço da obra (MT)</label>
+      <input
+        type="number"
+        id="preco"
+        placeholder="Ex.: 1500"
+        min="1"
+        required
+      >
+
+      <label>Descrição da obra</label>
+      <textarea
+        id="descricao"
+        rows="5"
+        placeholder="Fala um pouco sobre a tua obra..."
+        required
+      ></textarea>
+
+      <label>Imagem da obra</label>
+      <input
+        type="file"
+        id="imagem"
+        accept="image/*"
+        required
+      >
+
+      <div style="margin-top:20px;">
+        <button type="submit" class="btn btn-primary">
+          Enviar obra para análise
+        </button>
+      </div>
+
+      <p id="mensagem" style="margin-top:20px;"></p>
+
+    </form>
+
+  </section>
+
+</main>
+
+<script>
+const form = document.getElementById("formArtista");
+const mensagem = document.getElementById("mensagem");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const arquivo = document.getElementById("imagem").files[0];
+
+  if (!arquivo) {
+    mensagem.textContent = "❌ Escolhe uma imagem.";
+    return;
+  }
+
+  const leitor = new FileReader();
+
+  leitor.onload = function() {
+
+    const obra = {
+      id: "ART-" + Date.now(),
+
+      nomeCompleto:
+        document.getElementById("nome").value,
+
+      artista:
+        document.getElementById("artista").value,
+
+      whatsapp:
+        document.getElementById("whatsapp").value,
+
+      nome:
+        document.getElementById("obra").value,
+
+      categoria:
+        document.getElementById("categoria").value,
+
+      preco:
+        Number(document.getElementById("preco").value),
+
+      descricao:
+        document.getElementById("descricao").value,
+
+      imagem:
+        leitor.result,
+
+      pendente: true,
+
+      data:
+        new Date().toISOString()
+    };
+
+    const obras = JSON.parse(
+      localStorage.getItem("produtosPublicados") || "[]"
+    );
+
+    obras.push(obra);
+
+    localStorage.setItem(
+      "produtosPublicados",
+      JSON.stringify(obras)
+    );
+
+    mensagem.style.color = "green";
+
+    mensagem.innerHTML =
+      "✅ Obra enviada com sucesso!<br>" +
+      "Aguarda a análise do administrador.";
+
+    form.reset();
+  };
+
+  leitor.readAsDataURL(arquivo);
+});
+</script>
+
+</body>
+</html>

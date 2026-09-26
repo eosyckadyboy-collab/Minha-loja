@@ -1,92 +1,417 @@
-const produtosContainer = document.getElementById("produtos");
-const lista = document.getElementById("lista-carrinho");
-const totalElemento = document.getElementById("total");
-const limpar = document.getElementById("limpar");
+const WHATSAPP = "258849596174";
 
-let carrinho = [];
+let carrinho = JSON.parse(localStorage.getItem("carrinhoArte")) || [];
+let categoriaAtual = "Todos";
 
 const produtosPublicados =
-  JSON.parse(localStorage.getItem("meusProdutos")) || [];
+  JSON.parse(localStorage.getItem("produtosPublicados")) || [];
 
-const todosProdutos = [...produtos, ...produtosPublicados];
+let todosProdutos = [
+  ...produtos,
+  ...produtosPublicados.filter(p => p.pendente !== true)
+];
 
-todosProdutos.forEach((produto) => {
-  const div = document.createElement("div");
-  div.className = "produto";
+const produtosDiv = document.getElementById("produtos");
+const pesquisa = document.getElementById("pesquisa");
 
-  div.innerHTML = `
-    <img src="${produto.imagem}" alt="${produto.nome}" style="width:100%; border-radius:10px;">
-    <h3>${produto.nome}</h3>
-    <p>${produto.descricao}</p>
-    <strong>${produto.preco.toLocaleString("pt-PT")} MT</strong>
-    <br><br>
-    <button>Adicionar ao carrinho</button>
+function dinheiro(valor){
+  return Number(valor).toLocaleString("pt-MZ") + " MT";
+}
+
+function renderProdutos(){
+
+  const busca = pesquisa.value.toLowerCase().trim();
+
+  const lista = todosProdutos.filter(produto => {
+
+    const correspondeCategoria =
+      categoriaAtual === "Todos" ||
+      produto.categoria === categoriaAtual;
+
+    const correspondeBusca =
+      produto.nome.toLowerCase().includes(busca) ||
+      produto.artista.toLowerCase().includes(busca) ||
+      produto.categoria.toLowerCase().includes(busca);
+
+    return correspondeCategoria && correspondeBusca;
+  });
+
+  if(!lista.length){
+    produtosDiv.innerHTML =
+      '<p class="vazio">Nenhuma obra encontrada.</p>';
+    return;
+  }
+
+  produtosDiv.innerHTML = lista.map(produto => `
+
+    <article class="produto">
+
+      <img
+        class="produto-img"
+        src="${produto.imagem}"
+        alt="${produto.nome}"
+        onerror="this.src='imagens/1785836675510.jpg'"
+      >
+
+      <div class="produto-info">
+
+        <span class="produto-categoria">
+          ${produto.categoria}
+        </span>
+
+        <h3>${produto.nome}</h3>
+
+        <p class="produto-artista">
+          🎨 ${produto.artista}
+        </p>
+
+        <div class="preco">
+          ${dinheiro(produto.preco)}
+        </div>
+
+        <div class="produto-acoes">
+
+          <button onclick="verProduto(${produto.id})">
+            Ver detalhes
+          </button>
+
+          <button onclick="adicionarCarrinho(${produto.id})">
+            🛒 Comprar
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `).join("");
+}
+
+function verProduto(id){
+
+  const produto = todosProdutos.find(p => p.id === id);
+
+  if(!produto) return;
+
+  const modal = document.getElementById("produtoModal");
+  const detalhes = document.getElementById("produtoDetalhes");
+
+  detalhes.innerHTML = `
+
+    <div class="detalhe-produto">
+
+      <span class="produto-categoria">
+        ${produto.categoria}
+      </span>
+
+      <h2>${produto.nome}</h2>
+
+      <img src="${produto.imagem}" alt="${produto.nome}">
+
+      <p>
+        <strong>Artista:</strong> ${produto.artista}
+      </p>
+
+      <p>
+        ${produto.descricao || "Obra artística original."}
+      </p>
+
+      <div class="preco">
+        ${dinheiro(produto.preco)}
+      </div>
+
+      <button
+        class="btn principal"
+        onclick="adicionarCarrinho(${produto.id}); fecharModal();"
+      >
+        🛒 Adicionar ao carrinho
+      </button>
+
+    </div>
   `;
 
-  div.querySelector("button").addEventListener("click", () => {
-    carrinho.push(produto);
-    atualizarCarrinho();
-  });
+  modal.classList.add("aberto");
+}
 
-  produtosContainer.appendChild(div);
-});
+function fecharModal(){
+  document.getElementById("produtoModal").classList.remove("aberto");
+}
 
-function atualizarCarrinho() {
-  lista.innerHTML = "";
+function adicionarCarrinho(id){
 
-  if (carrinho.length === 0) {
-    lista.innerHTML = '<p class="vazio">Seu carrinho está vazio.</p>';
-    totalElemento.textContent = "0 MT";
+  const produto = todosProdutos.find(p => p.id === id);
+
+  if(!produto) return;
+
+  const existe = carrinho.find(p => p.id === id);
+
+  if(existe){
+    alert("Esta obra já está no seu carrinho.");
     return;
   }
 
-  let total = 0;
+  carrinho.push(produto);
 
-  carrinho.forEach((item, index) => {
-    total += item.preco;
+  salvarCarrinho();
 
-    const div = document.createElement("div");
-    div.className = "item-carrinho";
+  alert("Obra adicionada ao carrinho! 🎨");
 
-    div.innerHTML = `
-      <span>${item.nome} — ${item.preco.toLocaleString("pt-PT")} MT</span>
-      <button onclick="removerProduto(${index})">Remover</button>
-    `;
+  renderCarrinho();
 
-    lista.appendChild(div);
+  document.getElementById("carrinho").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function removerCarrinho(id){
+
+  carrinho = carrinho.filter(p => p.id !== id);
+
+  salvarCarrinho();
+  renderCarrinho();
+}
+
+function salvarCarrinho(){
+  localStorage.setItem(
+    "carrinhoArte",
+    JSON.stringify(carrinho)
+  );
+}
+
+function renderCarrinho(){
+
+  const lista = document.getElementById("lista-carrinho");
+  const total = document.getElementById("total");
+
+  if(!carrinho.length){
+
+    lista.innerHTML =
+      '<p class="vazio">O seu carrinho está vazio.</p>';
+
+    total.textContent = "0 MT";
+
+    return;
+  }
+
+  lista.innerHTML = carrinho.map(produto => `
+
+    <div class="item-carrinho">
+
+      <div>
+        <strong>${produto.nome}</strong>
+        <br>
+        <small>
+          ${produto.artista} • ${dinheiro(produto.preco)}
+        </small>
+      </div>
+
+      <button onclick="removerCarrinho(${produto.id})">
+        Remover
+      </button>
+
+    </div>
+
+  `).join("");
+
+  const soma = carrinho.reduce(
+    (total, produto) => total + Number(produto.preco),
+    0
+  );
+
+  total.textContent = dinheiro(soma);
+}
+
+function finalizarWhatsApp(){
+
+  if(!carrinho.length){
+
+    alert("O seu carrinho está vazio.");
+
+    return;
+  }
+
+  const total = carrinho.reduce(
+    (soma, produto) => soma + Number(produto.preco),
+    0
+  );
+
+  let mensagem =
+    "Olá! 👋 Gostaria de fazer um pedido na Minha Loja de Arte.%0A%0A";
+
+  carrinho.forEach((produto, index) => {
+
+    mensagem +=
+      `${index + 1}. ${produto.nome}%0A` +
+      `Artista: ${produto.artista}%0A` +
+      `Preço: ${dinheiro(produto.preco)}%0A%0A`;
   });
 
-  totalElemento.textContent =
-    total.toLocaleString("pt-PT") + " MT";
+  mensagem +=
+    `Total: ${dinheiro(total)}%0A%0A` +
+    "Aguardo informações para concluir o pedido.";
+
+  window.open(
+    `https://wa.me/${WHATSAPP}?text=${mensagem}`,
+    "_blank"
+  );
 }
 
-function removerProduto(index) {
-  carrinho.splice(index, 1);
-  atualizarCarrinho();
-}
+document.getElementById("limpar").addEventListener("click", () => {
 
-limpar.addEventListener("click", () => {
+  if(!carrinho.length) return;
+
   carrinho = [];
-  atualizarCarrinho();
+
+  salvarCarrinho();
+  renderCarrinho();
 });
 
-function finalizarWhatsApp() {
-  if (carrinho.length === 0) {
-    alert("O carrinho está vazio.");
-    return;
-  }
+pesquisa.addEventListener("input", renderProdutos);
 
-  let total = 0;
-  let mensagem = "Olá! Quero fazer este pedido:%0A%0A";
+document.querySelectorAll(".filtro").forEach(botao => {
 
-  carrinho.forEach((item, index) => {
-    mensagem += `${index + 1}. ${item.nome} - ${item.preco} MT%0A`;
-    total += item.preco;
+  botao.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".filtro")
+      .forEach(b => b.classList.remove("ativo"));
+
+    botao.classList.add("ativo");
+
+    categoriaAtual = botao.dataset.categoria;
+
+    renderProdutos();
   });
 
-  mensagem += `%0A*Total: ${total} MT*`;
+});
 
-  const url = `https://wa.me/258849596174?text=${mensagem}`;
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
 
-  window.open(url, "_blank");
+menuBtn.addEventListener("click", () => {
+  navLinks.classList.toggle("aberto");
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("aberto");
+  });
+
+});
+
+function abrirVendedor(){
+  document
+    .getElementById("vendedorModal")
+    .classList.add("aberto");
 }
+
+function fecharVendedor(){
+  document
+    .getElementById("vendedorModal")
+    .classList.remove("aberto");
+}
+
+document
+  .getElementById("formVendedor")
+  .addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    const arquivo =
+      document.getElementById("imagemObra").files[0];
+
+    if(!arquivo){
+      alert("Escolha uma imagem da obra.");
+      return;
+    }
+
+    const leitor = new FileReader();
+
+    leitor.onload = function(){
+
+      const novoProduto = {
+
+        id: Date.now(),
+
+        nome:
+          document.getElementById("nomeObra").value.trim(),
+
+        preco:
+          Number(document.getElementById("precoObra").value),
+
+        categoria:
+          document.getElementById("categoriaObra").value,
+
+        artista:
+          document.getElementById("nomeArtista").value.trim(),
+
+        whatsapp:
+          document.getElementById("whatsappArtista").value.trim(),
+
+        descricao:
+          document.getElementById("descricaoObra").value.trim(),
+
+        imagem: leitor.result,
+
+        pendente: true,
+
+        data:
+          new Date().toISOString()
+      };
+
+      const publicados =
+        JSON.parse(
+          localStorage.getItem("produtosPublicados")
+        ) || [];
+
+      publicados.push(novoProduto);
+
+      localStorage.setItem(
+        "produtosPublicados",
+        JSON.stringify(publicados)
+      );
+
+      alert(
+        "Obra enviada! 🎨\n\n" +
+        "Os dados foram guardados neste dispositivo " +
+        "e a obra deverá ser aprovada antes da publicação definitiva."
+      );
+
+      document
+        .getElementById("formVendedor")
+        .reset();
+
+      fecharVendedor();
+
+    };
+
+    leitor.readAsDataURL(arquivo);
+
+  });
+
+document.getElementById("produtoModal").addEventListener(
+  "click",
+  function(event){
+
+    if(event.target === this){
+      fecharModal();
+    }
+
+  }
+);
+
+document.getElementById("vendedorModal").addEventListener(
+  "click",
+  function(event){
+
+    if(event.target === this){
+      fecharVendedor();
+    }
+
+  }
+);
+
+renderProdutos();
+renderCarrinho();
