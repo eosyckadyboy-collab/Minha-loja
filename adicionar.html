@@ -48,7 +48,7 @@ function adicionarProduto() {
 
   leitor.onload = function() {
     const produtosGuardados =
-      JSON.parse(localStorage.getItem("meusProdutos")) || [];
+      JSON.parse(localStorage.getItem("produtosPublicados")) || [];
 
     produtosGuardados.push({
       id: Date.now(),
@@ -59,7 +59,7 @@ function adicionarProduto() {
     });
 
     localStorage.setItem(
-      "meusProdutos",
+      "produtosPublicados",
       JSON.stringify(produtosGuardados)
     );
 
