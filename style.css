@@ -6,6 +6,7 @@
 
 html{
   scroll-behavior:smooth;
+
 }
 
 body{
@@ -800,4 +801,60 @@ footer p{
   .section-title h2{
     font-size:32px;
   }
+}
+/* ===== CAPA DA MINHA LOJA ===== */
+
+.capa-app {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #111827, #312e81);
+}
+
+.capa-conteudo {
+  max-width: 600px;
+  color: white;
+}
+
+.capa-logo {
+  font-size: 70px;
+  margin-bottom: 15px;
+}
+
+.capa-conteudo h1 {
+  font-size: 42px;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.capa-conteudo .subtitulo {
+  font-size: 20px;
+  margin: 12px 0;
+  opacity: 0.9;
+}
+
+.capa-conteudo .descricao {
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 20px auto 30px;
+  max-width: 480px;
+}
+
+.botao-loja {
+  display: inline-block;
+  padding: 15px 28px;
+  border-radius: 30px;
+  background: white;
+  color: #312e81;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.botao-loja:hover {
+  transform: scale(1.03);
 }

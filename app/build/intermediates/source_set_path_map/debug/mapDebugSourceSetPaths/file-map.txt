@@ -1,0 +1,7 @@
+com.minhaloja.app-pngs-0 /storage/emulated/0/minha-loja/app/build/generated/res/pngs/debug
+com.minhaloja.app-resValues-1 /storage/emulated/0/minha-loja/app/build/generated/res/resValues/debug
+com.minhaloja.app-packageDebugResources-2 /storage/emulated/0/minha-loja/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.minhaloja.app-packageDebugResources-3 /storage/emulated/0/minha-loja/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.minhaloja.app-debug-4 /storage/emulated/0/minha-loja/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.minhaloja.app-debug-5 /storage/emulated/0/minha-loja/app/src/debug/res
+com.minhaloja.app-main-6 /storage/emulated/0/minha-loja/app/src/main/res

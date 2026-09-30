@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Produto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>🎨 Adicionar Tela</h1>
+  <p>Publique uma nova tela na sua loja</p>
+</header>
+
+<main>
+  <section class="carrinho">
+    <h2>Novo Produto</h2>
+
+    <input id="nome" type="text" placeholder="Nome da tela">
+    <input id="preco" type="number" placeholder="Preço em MT">
+    <textarea id="descricao" placeholder="Descrição da tela"></textarea>
+
+    <label>📸 Foto da tela</label>
+    <input id="foto" type="file" accept="image/*">
+
+    <button onclick="adicionarProduto()">Publicar Tela</button>
+
+    <p id="mensagem"></p>
+  </section>
+</main>
+
+<script>
+function adicionarProduto() {
+  const nome = document.getElementById("nome").value.trim();
+  const preco = document.getElementById("preco").value;
+  const descricao = document.getElementById("descricao").value.trim();
+  const foto = document.getElementById("foto").files[0];
+  const mensagem = document.getElementById("mensagem");
+
+  if (!nome || !preco || !descricao || !foto) {
+    mensagem.textContent = "Preencha todos os campos e escolha uma foto.";
+    return;
+  }
+
+  const leitor = new FileReader();
+
+  leitor.onload = function() {
+    const produtosGuardados =
+      JSON.parse(localStorage.getItem("meusProdutos")) || [];
+
+    produtosGuardados.push({
+      id: Date.now(),
+      nome: nome,
+      preco: Number(preco),
+      descricao: descricao,
+      imagem: leitor.result
+    });
+
+    localStorage.setItem(
+      "meusProdutos",
+      JSON.stringify(produtosGuardados)
+    );
+
+    mensagem.textContent = "✅ Tela publicada com foto!";
+
+    document.getElementById("nome").value = "";
+    document.getElementById("preco").value = "";
+    document.getElementById("descricao").value = "";
+    document.getElementById("foto").value = "";
+  };
+
+  leitor.readAsDataURL(foto);
+}
+</script>
+
+</body>
+</html>

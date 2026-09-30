@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.minhaloja.app-mergeDebugResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "/storage/emulated/0/minha-loja/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "443"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "8",
+                        "endColumns": "12",
+                        "endOffsets": "442"
+                    }
+                }
+            ]
+        }
+    ]
+}

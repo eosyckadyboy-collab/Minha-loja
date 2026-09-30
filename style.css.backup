@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+}
+
+header {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+}
+
+header h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+main {
+  max-width: 1000px;
+  margin: auto;
+  padding: 25px 15px;
+}
+
+main > h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.produto {
+  background: white;
+  padding: 18px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.foto {
+  font-size: 60px;
+  padding: 25px;
+  background: #eee;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.produto h3 {
+  margin-bottom: 8px;
+}
+
+.produto p {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.produto strong {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+  font-size: 15px;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.carrinho {
+  background: white;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.carrinho h2 {
+  margin-bottom: 15px;
+}
+
+.item-carrinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.item-carrinho button {
+  width: auto;
+  padding: 7px 10px;
+  background: #c62828;
+}
+
+.vazio {
+  color: #777;
+}
+
+.total {
+  text-align: right;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+#limpar {
+  background: #c62828;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 30px;
+  background: #111;
+  color: white;
+}
+
+#whatsapp {
+  background: #25D366;
+  margin-top: 10px;
+}
+
+#whatsapp {
+  background: #25D366;
+  margin-top: 10px;
+}
