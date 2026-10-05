@@ -1,330 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta name="google-site-verification" content="JQPJwqJTNl-7qqz4a5sA1FuyAro8fbnOj7Vle_P0FtQ">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta name="description" content="Minha Loja de Arte — telas, pinturas e desenhos originais em Moçambique. Compre arte ou publique a sua própria obra.">
-  <meta name="author" content="Siedade Arte">
-  <meta property="og:title" content="Minha Loja de Arte | Siedade Arte">
-  <meta property="og:description" content="Um espaço para descobrir, comprar e vender arte em Moçambique.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://eosyckadyboy-collab.github.io/Minha-loja/">
-
-  <title>Minha Loja de Arte | Siedade Arte</title>
-  <link rel="stylesheet" href="style.css?v=20260930">
+  <title>Minha Loja de Arte</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<section class="capa-app">
-  <div class="capa-conteudo">
-    <div class="capa-logo">🎨</div>
 
-    <h1>MINHA LOJA</h1>
-
-    <p class="subtitulo">Arte • Criatividade • Tecnologia</p>
-
-    <p class="descricao">
-      Conheça as minhas obras, pinturas e trabalhos por encomenda.
-    </p>
-
-    <a href="#loja" class="botao-loja">🛍️ ENTRAR NA LOJA</a>
-  </div>
-</section>
-<header class="topo">
-  <nav class="navbar">
-    <div class="logo">
-      <span>🎨</span>
-      <div>
-        <strong>Minha Loja de Arte</strong>
-        <small>por Siedade Arte</small>
-      </div>
-    </div>
-
-    <button class="menu-btn" id="menuBtn">☰</button>
-
-    <div class="nav-links" id="navLinks">
-      <a href="#inicio">Início</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#artistas">Artistas</a>
-      <a href="#vender">Vender arte</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#carrinho">🛒 Carrinho</a>
-    </div>
-  </nav>
+<header>
+  <img src="imagens/perfil.jpg" alt="Minha Loja de Arte" class="perfil-loja">
+  <h1>🎨 Minha Loja de Arte</h1>
+  <p>Telas e pinturas feitas à mão</p>
 </header>
 
 <main>
-
-<section class="hero" id="inicio">
-  <div class="hero-text">
-    <span class="tag">🎨 ARTE • CRIATIVIDADE • MOÇAMBIQUE</span>
-
-    <h1>A tua arte<br><span>merece ser vista.</span></h1>
-
-    <p>
-      Olá, seja bem-vindo à <strong>Minha Loja de Arte</strong>.
-      Descobre obras originais, compra arte ou publica a tua própria criação.
-    </p>
-
-    <div class="hero-buttons">
-      <a href="#galeria" class="btn principal">🎨 Explorar arte</a>
-      <a href="#vender" class="btn secundario">➕ Vender minha arte</a>
-    </div>
-
-    <div class="mini-info">
-      <span>✓ Arte original</span>
-      <span>✓ Artistas moçambicanos</span>
-      <span>✓ Encomendas personalizadas</span>
-    </div>
-  </div>
-
-  <div class="hero-art">
-    <div class="splash splash1"></div>
-    <div class="splash splash2"></div>
-
-    <div class="artist-photo">
-      <img src="imagens/siedade-arte.jpg" alt="Siedade Arte">
-    </div>
-
-    <div class="artist-label">
-      <strong>Siedade Arte</strong>
-      <span>Artista & Criador</span>
-    </div>
-  </div>
-</section>
-
-<section class="stats">
-  <div><strong>15+</strong><span>Obras</span></div>
-  <div><strong>100%</strong><span>Arte original</span></div>
-  <div><strong>🇲🇿</strong><span>Moçambique</span></div>
-  <div><strong>∞</strong><span>Criatividade</span></div>
-</section>
-
-<section class="section" id="galeria">
-
-  <div class="section-title">
-    <span>GALERIA</span>
-    <h2>Descubra a nossa arte</h2>
-    <p>Escolha uma obra, veja os detalhes e faça o seu pedido.</p>
-  </div>
-
-  <div class="filtros">
-    <input id="pesquisa" type="search" placeholder="🔎 Procurar uma obra...">
-
-    <div class="categorias">
-      <button class="filtro ativo" data-categoria="Todos">Todos</button>
-      <button class="filtro" data-categoria="Pintura">Pinturas</button>
-      <button class="filtro" data-categoria="Tela">Telas</button>
-      <button class="filtro" data-categoria="Desenho">Desenhos</button>
-      <button class="filtro" data-categoria="Paisagem">Paisagens</button>
-      <button class="filtro" data-categoria="Retrato">Retratos</button>
-    </div>
-  </div>
+  <h2>Minhas Telas</h2>
 
   <div class="produtos" id="produtos"></div>
-</section>
 
-<section class="vender section" id="vender">
-  <div class="vender-box">
-    <div>
-      <span class="section-tag">PARA ARTISTAS</span>
-      <h2>Tem uma obra para vender?</h2>
-      <p>
-        Publique a sua arte na Minha Loja de Arte e apresente o seu trabalho
-        para pessoas interessadas em comprar arte.
-      </p>
-
-      <ul>
-        <li>🎨 Publique pinturas, telas e desenhos</li>
-        <li>👤 Mostre o seu nome como artista</li>
-        <li>💰 Defina o preço da sua obra</li>
-        <li>📱 Receba contactos de compradores</li>
-      </ul>
-
-      <p class="aviso">
-        A publicação de uma obra poderá estar sujeita a uma taxa de publicação
-        e aprovação da plataforma.
-      </p>
-
-      <button class="btn principal" onclick="abrirVendedor()">
-        ➕ Publicar minha arte
-      </button>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="artistas">
-  <div class="section-title">
-    <span>ARTISTAS</span>
-    <h2>Artistas da plataforma</h2>
-    <p>Conheça quem está por trás das obras.</p>
-  </div>
-
-  <div class="artista-card">
-    <div class="artista-foto">
-      <img src="imagens/siedade-arte.jpg" alt="Siedade Arte">
-    </div>
-
-    <div>
-      <span class="verified">✓ Artista</span>
-      <h3>Siedade Arte</h3>
-      <p>
-        Artista moçambicano apaixonado por desenho, pintura e criatividade.
-        Através da arte, transforma ideias em obras e cria oportunidades.
-      </p>
-
-      <a href="#sobre" class="texto-link">Conhecer Siedade Arte →</a>
-    </div>
-  </div>
-</section>
-
-<section class="encomenda">
-  <div>
-    <span>🎨 ENCOMENDA PERSONALIZADA</span>
-    <h2>Quer uma obra feita especialmente para si?</h2>
-    <p>
-      Envie a sua ideia e converse diretamente para combinar os detalhes
-      da sua obra personalizada.
-    </p>
-
-    <a class="btn principal"
-       href="https://wa.me/258849596174?text=Olá%20Siedade%20Arte,%20gostaria%20de%20fazer%20uma%20encomenda%20de%20arte."
-       target="_blank">
-      📲 Fazer encomenda
-    </a>
-  </div>
-</section>
-
-<section class="sobre section" id="sobre">
-  <div class="sobre-grid">
-    <div>
-      <span class="section-tag">SOBRE O ARTISTA</span>
-      <h2>Siedade Arte</h2>
-
-      <p>
-        A arte é mais do que uma imagem. É uma forma de expressar ideias,
-        sentimentos, histórias e sonhos.
-      </p>
-
-      <p>
-        A <strong>Minha Loja de Arte</strong> nasceu para criar um espaço
-        onde artistas possam apresentar as suas obras e onde qualquer pessoa
-        possa encontrar arte original.
-      </p>
-
-      <p>
-        O objetivo é aproximar artistas e compradores e ajudar a transformar
-        criatividade em oportunidade.
-      </p>
-    </div>
-
-    <div class="sobre-frase">
-      <span>“</span>
-      <h3>A criatividade transforma uma ideia em algo que pode ser visto, sentido e lembrado.</h3>
-      <strong>— Siedade Arte</strong>
-    </div>
-  </div>
-</section>
-
-<section class="carrinho section" id="carrinho">
-  <div class="section-title">
-    <span>SEU PEDIDO</span>
+  <section class="carrinho">
     <h2>🛒 Meu Carrinho</h2>
-  </div>
 
-  <div id="lista-carrinho">
-    <p class="vazio">O seu carrinho está vazio.</p>
-  </div>
-
-  <div class="carrinho-final">
-    <strong>Total: <span id="total">0 MT</span></strong>
-
-    <div>
-      <button id="limpar" class="btn limpar">Limpar carrinho</button>
-      <button id="whatsapp" class="btn principal" onclick="finalizarWhatsApp()">
-        📲 Finalizar pedido
-      </button>
+    <div id="lista-carrinho">
+      <p class="vazio">Seu carrinho está vazio.</p>
     </div>
-  </div>
-</section>
 
+    <div class="total">
+      Total: <span id="total">0 MT</span>
+    </div>
+
+    <button id="limpar">Limpar carrinho</button>
+    <button id="whatsapp" onclick="finalizarWhatsApp()">
+      📲 Finalizar pedido pelo WhatsApp
+    </button>
+  </section>
 </main>
 
 <footer>
-  <div>
-    <strong>🎨 Minha Loja de Arte</strong>
-    <p>Arte, criatividade e oportunidades.</p>
-  </div>
-
-  <div>
-    <strong>Siedade Arte</strong>
-    <p>Criador da plataforma</p>
-  </div>
-
-  <div>
-    <p>© 2026 Minha Loja de Arte</p>
-    <p>Todos os direitos reservados.</p>
-  </div>
+  <p>© 2026 Minha Loja de Arte</p>
 </footer>
 
-<!-- MODAL DO PRODUTO -->
-<div class="modal" id="produtoModal">
-  <div class="modal-box">
-    <button class="fechar" onclick="fecharModal()">×</button>
-    <div id="produtoDetalhes"></div>
-  </div>
-</div>
-
-<!-- MODAL DO VENDEDOR -->
-<div class="modal" id="vendedorModal">
-  <div class="modal-box">
-    <button class="fechar" onclick="fecharVendedor()">×</button>
-
-    <h2>➕ Publicar minha arte</h2>
-    <p class="modal-info">
-      Preencha os dados da sua obra. A publicação poderá passar por aprovação.
-    </p>
-
-    <form id="formVendedor">
-
-      <label>Nome do artista</label>
-      <input id="nomeArtista" required placeholder="Ex.: João Artista">
-
-      <label>Nome da obra</label>
-      <input id="nomeObra" required placeholder="Ex.: Pôr do Sol">
-
-      <label>Categoria</label>
-      <select id="categoriaObra" required>
-        <option value="Pintura">Pintura</option>
-        <option value="Tela">Tela</option>
-        <option value="Desenho">Desenho</option>
-        <option value="Paisagem">Paisagem</option>
-        <option value="Retrato">Retrato</option>
-      </select>
-
-      <label>Preço (MT)</label>
-      <input id="precoObra" type="number" min="1" required placeholder="Ex.: 1500">
-
-      <label>WhatsApp do artista</label>
-      <input id="whatsappArtista" required placeholder="25884xxxxxxx">
-
-      <label>Descrição da obra</label>
-      <textarea id="descricaoObra" required placeholder="Fale um pouco sobre a sua obra..."></textarea>
-
-      <label>Imagem da obra</label>
-      <input id="imagemObra" type="file" accept="image/*" required>
-
-      <button class="btn principal" type="submit">
-        📤 Enviar obra
-      </button>
-    </form>
-  </div>
-</div>
-
 <script src="produtos.js"></script>
-<script src="script.js?v=20260930"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
