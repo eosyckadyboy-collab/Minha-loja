@@ -251,10 +251,10 @@ function finalizarWhatsApp(){
     `Total: ${dinheiro(total)}%0A%0A` +
     "Aguardo informações para concluir o pedido.";
 
-  window.open(
-    `https://wa.me/${WHATSAPP}?text=${mensagem}`,
-    "_blank"
-  );
+  const urlWhatsApp =
+    `https://wa.me/${WHATSAPP}?text=${mensagem}`;
+
+  window.location.href = urlWhatsApp;
 }
 
 document.getElementById("limpar").addEventListener("click", () => {
