@@ -1,167 +1,261 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — Minha Loja de Arte</title>
-  <style>
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#f5f5f5;
-      color:#111;
-    }
-    header{
-      background:#111;
-      color:#fff;
-      padding:22px;
-      text-align:center;
-    }
-    main{
-      max-width:1000px;
-      margin:25px auto;
-      padding:15px;
-    }
-    .box{
-      background:#fff;
-      padding:22px;
-      border-radius:16px;
-      margin-bottom:20px;
-      box-shadow:0 5px 20px #0001;
-    }
-    input,button{
-      width:100%;
-      padding:13px;
-      margin-top:10px;
-      border-radius:10px;
-      border:1px solid #ddd;
-      font-size:16px;
-    }
-    button{
-      border:0;
-      background:#111;
-      color:white;
-      cursor:pointer;
-      font-weight:bold;
-    }
-    .aprovar{background:#159447}
-    .rejeitar{background:#d33}
-    .apagar{background:#555}
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:15px;
-    }
-    .stat{
-      background:#111;
-      color:white;
-      padding:20px;
-      border-radius:14px;
-      text-align:center;
-    }
-    .stat strong{
-      display:block;
-      font-size:28px;
-    }
-    .produto{
-      border:1px solid #ddd;
-      border-radius:14px;
-      padding:15px;
-      margin-top:15px;
-    }
-    .produto img{
-      width:100%;
-      max-height:250px;
-      object-fit:cover;
-      border-radius:10px;
-    }
-    .produto h3{margin-bottom:5px}
-    .acoes{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-    .acoes button:last-child{
-      background:#d33;
-    }
-    .hidden{display:none}
-    .logout{
-      background:#d33;
-      max-width:180px;
-    }
-    @media(max-width:600px){
-      .stats{grid-template-columns:1fr}
-      .acoes{grid-template-columns:1fr}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel ADM | Minha Loja de Arte</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
+header{background:#d94320;color:white;padding:22px 16px;text-align:center}
+header h1{margin:0 0 6px;font-size:25px}
+main{max-width:850px;margin:22px auto;padding:0 14px}
+section{background:white;padding:20px;border-radius:12px;margin-bottom:18px;box-shadow:0 2px 10px #0000000d}
+h2{margin-top:0;font-size:21px}
+label{display:block;margin:13px 0 6px;font-weight:bold}
+input,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:7px;font:inherit}
+textarea{min-height:90px;resize:vertical}
+button{padding:12px 16px;border:0;border-radius:7px;background:#d94320;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+button:disabled{opacity:.6}
+.secondary{background:#444}
+.danger{background:#b42318}
+.msg{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:12px}
+.obra{display:flex;gap:14px;border-top:1px solid #ddd;padding:15px 0;align-items:center}
+.obra img{width:100px;height:100px;object-fit:cover;border-radius:7px;background:#eee}
+.info{flex:1;min-width:0}
+.info h3{margin:0 0 7px;overflow-wrap:anywhere}
+.info p{margin:5px 0;overflow-wrap:anywhere}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.escondido{display:none}
+@media(max-width:480px){.obra{align-items:flex-start}.obra img{width:78px;height:78px}.obra button{font-size:13px;padding:10px}}
+</style>
 </head>
-
 <body>
-
 <header>
-  <h1>🎨 Administração</h1>
-  <p>Minha Loja de Arte — Siedade Arte</p>
+  <h1>Minha Loja de Arte</h1>
+  <p>Painel de administração</p>
 </header>
-
 <main>
-
-  <section id="loginBox" class="box">
-    <h2>🔐 Acesso administrativo</h2>
-    <p>Digite o PIN de administrador.</p>
-
-    <input
-      type="password"
-      id="pin"
-      placeholder="PIN"
-      inputmode="numeric"
-    >
-
-    <button onclick="entrarAdmin()">Entrar</button>
-
-    <p id="erro" style="color:#d33;"></p>
+  <section id="login">
+    <h2>Entrar como administrador</h2>
+    <p>Usa o e-mail e a palavra-passe da conta autorizada.</p>
+    <form id="formLogin">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="senha">Palavra-passe</label>
+      <input id="senha" type="password" autocomplete="current-password" required>
+      <br><br><button id="entrar">Entrar</button>
+    </form>
+    <p id="msgLogin" class="msg" role="status"></p>
   </section>
 
-  <section id="painel" class="hidden">
+  <div id="painel" class="escondido">
+    <section>
+      <h2>Publicar pintura</h2>
+      <form id="formPublicar">
+        <label for="nome">Nome da pintura</label>
+        <input id="nome" required>
+        <label for="preco">Preço (MT)</label>
+        <input id="preco" type="number" min="1" step="1" required>
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" required></textarea>
+        <label for="foto">Fotografia</label>
+        <input id="foto" type="file" accept="image/*" required>
+        <br><br><button id="publicar">Publicar pintura</button>
+      </form>
+      <p id="msgPublicar" class="msg" role="status"></p>
+    </section>
 
-    <div class="box">
-      <h2>📊 Painel</h2>
-
-      <div class="stats">
-        <div class="stat">
-          <strong id="pendentes">0</strong>
-          Pendentes
-        </div>
-
-        <div class="stat">
-          <strong id="aprovadas">0</strong>
-          Aprovadas
-        </div>
-
-        <div class="stat">
-          <strong id="total">0</strong>
-          Total
-        </div>
-      </div>
-
-      <button class="logout" onclick="sairAdmin()">Sair</button>
-    </div>
-
-    <div class="box">
-      <h2>⏳ Obras aguardando aprovação</h2>
-      <div id="listaPendentes"></div>
-    </div>
-
-    <div class="box">
-      <h2>✅ Obras publicadas</h2>
-      <div id="listaAprovadas"></div>
-    </div>
-
-  </section>
-
+    <section>
+      <h2>Pinturas publicadas</h2>
+      <p>Confirma o nome e a imagem antes de eliminar uma obra.</p>
+      <button id="atualizar" class="secondary" type="button">Actualizar lista</button>
+      <button id="sair" class="secondary" type="button">Terminar sessão</button>
+      <p id="msgLista" class="msg" role="status"></p>
+      <div id="lista"></div>
+    </section>
+  </div>
 </main>
 
-<script src="admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+"use strict";
 
+const ADMIN_UID = "67d92c8c-3264-430a-9846-b9e34b029481";
+const $ = id => document.getElementById(id);
+let administrador = false;
+
+function mensagem(id, texto) { $(id).textContent = texto; }
+
+function escapar(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+
+function mostrarPainel() {
+  $("login").classList.add("escondido");
+  $("painel").classList.remove("escondido");
+}
+
+async function verificarSessao() {
+  const { data, error } = await supabaseClient.auth.getSession();
+  if (error) return;
+  const user = data.session?.user;
+  if (user?.id === ADMIN_UID) {
+    administrador = true;
+    mostrarPainel();
+    await carregarPinturas();
+  } else if (user) {
+    await supabaseClient.auth.signOut();
+  }
+}
+
+$("formLogin").addEventListener("submit", async e => {
+  e.preventDefault();
+  const botao = $("entrar");
+  botao.disabled = true;
+  mensagem("msgLogin", "A verificar a conta...");
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: $("email").value.trim(),
+      password: $("senha").value
+    });
+    if (error) throw error;
+    if (data.user?.id !== ADMIN_UID) {
+      await supabaseClient.auth.signOut();
+      throw new Error("Esta conta não está autorizada.");
+    }
+    administrador = true;
+    $("senha").value = "";
+    mensagem("msgLogin", "");
+    mostrarPainel();
+    await carregarPinturas();
+  } catch (err) {
+    mensagem("msgLogin", "Não foi possível entrar: " + (err.message || "erro desconhecido"));
+  } finally {
+    botao.disabled = false;
+  }
+});
+
+$("formPublicar").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!administrador) return;
+  const botao = $("publicar");
+  botao.disabled = true;
+  let caminho = null;
+  let uploadFeito = false;
+  mensagem("msgPublicar", "A publicar...");
+  try {
+    const nome = $("nome").value.trim();
+    const preco = Number($("preco").value);
+    const descricao = $("descricao").value.trim();
+    const foto = $("foto").files[0];
+
+    if (!nome || !descricao || !Number.isFinite(preco) || preco <= 0 || !foto)
+      throw new Error("Preenche todos os campos correctamente.");
+    if (!foto.type.startsWith("image/"))
+      throw new Error("Escolhe um ficheiro de imagem.");
+
+    const nomeSeguro = foto.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    caminho = ADMIN_UID + "/" + Date.now() + "-" + nomeSeguro;
+
+    const { error: erroFoto } = await supabaseClient.storage
+      .from("obras-arte")
+      .upload(caminho, foto, { upsert: false, contentType: foto.type });
+    if (erroFoto) throw erroFoto;
+    uploadFeito = true;
+
+    const { data: urlData } = supabaseClient.storage
+      .from("obras-arte").getPublicUrl(caminho);
+
+    const { error: erroInsert } = await supabaseClient.from("produtos").insert([{
+      nome, preco, descricao, imagem: urlData.publicUrl, estado: "disponivel"
+    }]);
+    if (erroInsert) throw erroInsert;
+
+    $("formPublicar").reset();
+    mensagem("msgPublicar", "Pintura publicada com sucesso. Será partilhada com a loja.");
+    await carregarPinturas();
+  } catch (err) {
+    mensagem("msgPublicar", "Erro: " + (err.message || "não foi possível publicar."));
+    if (uploadFeito && caminho) {
+      await supabaseClient.storage.from("obras-arte").remove([caminho]);
+    }
+  } finally {
+    botao.disabled = false;
+  }
+});
+
+async function carregarPinturas() {
+  if (!administrador) return;
+  mensagem("msgLista", "A carregar pinturas...");
+  $("lista").replaceChildren();
+
+  const { data, error } = await supabaseClient.from("produtos")
+    .select("id,nome,preco,descricao,imagem,estado,criado_em")
+    .eq("estado", "disponivel")
+    .order("criado_em", { ascending: false });
+
+  if (error) {
+    mensagem("msgLista", "Não foi possível carregar: " + error.message);
+    return;
+  }
+  mensagem("msgLista", data.length ? data.length + " pintura(s) encontrada(s)." : "Ainda não há pinturas publicadas.");
+
+  for (const p of data) {
+    const artigo = document.createElement("article");
+    artigo.className = "obra";
+    artigo.innerHTML = `
+      <img src="${escapar(p.imagem)}" alt="">
+      <div class="info">
+        <h3>${escapar(p.nome)}</h3>
+        <p>${escapar(p.preco)} MT</p>
+        <p>${escapar(p.descricao)}</p>
+        <div class="acoes"><button class="danger" type="button">Eliminar pintura</button></div>
+      </div>`;
+    artigo.querySelector("button").addEventListener("click", () => eliminarPintura(p));
+    $("lista").appendChild(artigo);
+  }
+}
+
+async function eliminarPintura(p) {
+  if (!administrador) return;
+  const ok = confirm('Queres mesmo eliminar "' + p.nome + '"? Esta acção não pode ser desfeita.');
+  if (!ok) return;
+
+  mensagem("msgLista", "A eliminar a pintura...");
+  const { error } = await supabaseClient.from("produtos").delete().eq("id", p.id);
+  if (error) {
+    mensagem("msgLista", "Não foi possível eliminar: " + error.message);
+    return;
+  }
+
+  // Tenta apagar a fotografia correspondente do bucket público.
+  const marcador = "/storage/v1/object/public/obras-arte/";
+  if (p.imagem?.includes(marcador)) {
+    const caminho = p.imagem.split(marcador)[1];
+    if (caminho) {
+      const { error: erroFoto } = await supabaseClient.storage
+        .from("obras-arte").remove([decodeURIComponent(caminho)]);
+      if (erroFoto) console.warn("A pintura foi removida, mas a fotografia não foi apagada:", erroFoto.message);
+    }
+  }
+  await carregarPinturas();
+}
+
+$("atualizar").addEventListener("click", carregarPinturas);
+$("sair").addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  administrador = false;
+  $("painel").classList.add("escondido");
+  $("login").classList.remove("escondido");
+  mensagem("msgLogin", "Sessão terminada.");
+  $("lista").replaceChildren();
+});
+
+verificarSessao();
+</script>
 </body>
 </html>
