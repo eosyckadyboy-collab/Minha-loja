@@ -18,6 +18,46 @@ function dinheiro(valor){
   return Number(valor).toLocaleString("pt-MZ") + " MT";
 }
 
+let produtosBanco = [];
+
+async function carregarProdutosSupabase(){
+  if (!window.supabase || typeof supabaseClient === "undefined") {
+    console.warn("Supabase ainda não está disponível.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("produtos")
+    .select("id,nome,descricao,preco,imagem,estado,criado_em")
+    .eq("estado", "disponivel")
+    .order("criado_em", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao carregar pinturas:", error.message);
+    return;
+  }
+
+  produtosBanco = (data || []).map(p => ({
+    id: -Number(p.id),
+    nome: p.nome,
+    preco: Number(p.preco) || 0,
+    categoria: "Pintura",
+    artista: "Siedade Arte",
+    descricao: p.descricao || "Obra artística original.",
+    imagem: p.imagem,
+    whatsapp: WHATSAPP,
+    origemSupabase: true
+  }));
+
+  todosProdutos = [
+    ...produtos,
+    ...produtosPublicados.filter(p => p.pendente !== true),
+    ...produtosBanco
+  ];
+
+  renderProdutos();
+}
+
 function renderProdutos(){
 
   const busca = pesquisa.value.toLowerCase().trim();
@@ -414,4 +454,11 @@ document.getElementById("vendedorModal").addEventListener(
 );
 
 renderProdutos();
+
+carregarProdutosSupabase();
+setInterval(carregarProdutosSupabase, 30000);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) carregarProdutosSupabase();
+});
+
 renderCarrinho();
