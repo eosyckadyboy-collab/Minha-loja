@@ -28,7 +28,7 @@ async function carregarProdutosSupabase(){
 
   const { data, error } = await supabaseClient
     .from("produtos")
-    .select("id,nome,descricao,preco,imagem,estado,criado_em")
+    .select("id,nome,descricao,preco,tipo,imagem,estado,criado_em")
     .eq("estado", "disponivel")
     .order("criado_em", { ascending: false });
 
@@ -41,7 +41,7 @@ async function carregarProdutosSupabase(){
     id: -Number(p.id),
     nome: p.nome,
     preco: Number(p.preco) || 0,
-    categoria: "Pintura",
+    categoria: p.tipo || "Pintura",
     artista: "Siedade Arte",
     descricao: p.descricao || "Obra artística original.",
     imagem: p.imagem,

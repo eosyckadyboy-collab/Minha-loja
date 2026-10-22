@@ -57,6 +57,17 @@ button:disabled{opacity:.6}
         <input id="nome" required>
         <label for="preco">Preço (MT)</label>
         <input id="preco" type="number" min="1" step="1" required>
+        <label for="tipo">Tipo de arte</label>
+        <select id="tipo" required>
+          <option value="Desenho">Desenho</option>
+          <option value="Pintura" selected>Pintura</option>
+          <option value="Tela">Tela</option>
+          <option value="Quadro">Quadro</option>
+          <option value="Arte digital">Arte digital</option>
+          <option value="Escultura">Escultura</option>
+          <option value="Arte reciclada">Arte reciclada</option>
+          <option value="Outro">Outro</option>
+        </select>
         <label for="descricao">Descrição</label>
         <textarea id="descricao" required></textarea>
         <label for="foto">Fotografia</label>
@@ -150,6 +161,7 @@ $("formPublicar").addEventListener("submit", async e => {
   try {
     const nome = $("nome").value.trim();
     const preco = Number($("preco").value);
+    const tipo = $("tipo").value;
     const descricao = $("descricao").value.trim();
     const foto = $("foto").files[0];
 
@@ -171,7 +183,7 @@ $("formPublicar").addEventListener("submit", async e => {
       .from("obras-arte").getPublicUrl(caminho);
 
     const { error: erroInsert } = await supabaseClient.from("produtos").insert([{
-      nome, preco, descricao, imagem: urlData.publicUrl, estado: "disponivel"
+      nome, preco, tipo, descricao, imagem: urlData.publicUrl, estado: "disponivel"
     }]);
     if (erroInsert) throw erroInsert;
 
@@ -194,7 +206,7 @@ async function carregarPinturas() {
   $("lista").replaceChildren();
 
   const { data, error } = await supabaseClient.from("produtos")
-    .select("id,nome,preco,descricao,imagem,estado,criado_em")
+    .select("id,nome,preco,tipo,descricao,imagem,estado,criado_em")
     .eq("estado", "disponivel")
     .order("criado_em", { ascending: false });
 
@@ -211,6 +223,7 @@ async function carregarPinturas() {
       <img src="${escapar(p.imagem)}" alt="">
       <div class="info">
         <h3>${escapar(p.nome)}</h3>
+        <p>${escapar(p.tipo || "Pintura")}</p>
         <p>${escapar(p.preco)} MT</p>
         <p>${escapar(p.descricao)}</p>
         <div class="acoes"><button class="danger" type="button">Eliminar pintura</button></div>
